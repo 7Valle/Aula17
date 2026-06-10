@@ -1,10 +1,17 @@
 from sqlalchemy import create_engine
 import pandas as pd
 
-host = 'localhost'
-user = 'root'
-password = ''
-database = 'bd_base_pedidos'
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+
+# variáveis de conexão
+host = os.getenv('DB_HOST')
+user = os.getenv('DB_USER')
+password = os.getenv('DB_PASSWORD')
+database = os.getenv('DB_DATABASE')
 
 engine = create_engine(f'mysql+pymysql://{user}:{password}@{host}/{database}')
 

@@ -1,12 +1,30 @@
+#pip install python-dotenv
+
 from sqlalchemy import create_engine
 import pandas as pd
 
-host = 'localhost'
-user = 'root'
-password = ''
-database = 'bd_base_pedidos'
+from dotenv import load_dotenv
+import os
 
-engine = create_engine(f'mysql+pymysql://{user}:{password}@{host}/{database}')
+
+def conecta_banco():
+    # variáveis de conexão
+    host = os.getenv('DB_HOST')
+    user = os.getenv('DB_USER')
+    password = os.getenv('DB_PASSWORD')
+    database = os.getenv('DB_DATABASE')
+
+    #URL de conexão com o banco
+    engine = create_engine(f'mysql+pymysql://{user}:{password}@{host}/{database}')
+
+    return engine
+    #Fim da função
+
+
+load_dotenv()
+
+engine = conecta_banco()
+
 
 try:
     df_clientes = pd.read_sql('tb_clientes', engine)
